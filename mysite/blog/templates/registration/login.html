@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.center_div h2{
+  margin-bottom:30px;
+  color:#189F5E;
+}
+.center_div{
+    margin: 0 auto;
+    width:60% /* value of your choice which suits your alignment */
+}
+
+</style>
+
+<div class="row">
+  <div class="center_div">
+
+<h2>Log In Page</h2>
+<form method="post">{% csrf_token %}
+
+  <div class="form-group">
+    <label>User Name</label>
+    <section>{{ form.username }}</section>
+    </div>
+  <div class="form-group">
+    <label>Password</label>
+    <section>{{ form.password }}</section>
+  </div>
+
+  <button type="submit"> Log In</button>
+  <a href="{% url 'password_reset' %}"> Forgot your password?</a>
+</form>
+</div>
+</div>
+{% endblock %}

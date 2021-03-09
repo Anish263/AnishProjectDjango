@@ -1,0 +1,100 @@
+
+<html>
+<head>
+  {% load static %}
+  {% load thumbnail %}
+  {% load short_form %}
+<title>SRV Code Blog</title>
+
+<script src="https://kit.fontawesome.com/710aae13dc.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<!-- <link rel="stylesheet" href="{% static 'css/blog.css' %}"> -->
+<style>
+body{
+  padding-top: 8.0rem;
+  background-color: #ECD9FF;
+
+}
+.navbar, ul,li{
+  padding: 5px;
+}
+.card{
+  margin: auto;
+}
+.body_block{
+  margin-top: 40px;
+}
+</style>
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" style="height:auto;">
+   <div class="container-fluid">
+     <div class="navbar-header">
+       <a class="navbar-brand" href="/">
+         <img src="{% static 'logo/developers.PNG' %}" style="width:50px;" class="d-inline-block align-top" alt="">
+         CodeBlog</a>
+     </div>
+     <ul class="nav navbar-nav">
+       <li class="active"><a href="/">Home</a></li>
+       {% if user.is_authenticated %}
+        <li><a href="{% url 'post_new' %}">Add Post</a></li>
+       {% endif %}
+       <li><a href="#">About</a></li>
+       <li><a href="{% url 'contactus' %}">Contact Us</a></li>
+
+
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+
+{% if user.is_authenticated %}
+       <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+       <li><a href="{% url 'password_change' %}"><span class="glyphicon glyphicon-cog"></span> Change password</a></li>
+       <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
+    {% else %}
+    <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-sign-up"></span> Sign Up</a></li>
+    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+    {% endif %}
+     </ul>
+   </div>
+ </nav>
+<div class="body_block">
+<div class="container-fluid">
+
+  <div class="row">
+       <div class="col-md-8">
+
+         {% block content %}
+         {% endblock %}
+
+        </div>
+
+
+      <div class="col-md-4">
+
+         {% for recent in recentpost %}
+         {% if recent.fav %}
+             <div class="card" style="width: 35rem; margin-bottom:20px;">
+               <img src="{% thumbnail recent.image 350x200 crop='smart' %}" class="card-img-top" alt="...">
+               <div class="card-body">
+                 <h3 class="card-title"><a href="{% url 'post_detail' pk=recent.pk %}"><b>{{ recent.title }}</b></a></h3>
+                 <p><b>published:</b> {{ recent.published_date }}</p>
+                 <p class="card-text">{{ recent.text|short_form:150}}<a href="{% url 'post_detail' pk=recent.pk %}">...More</a></p>
+               </div>
+             </div>
+             <hr>
+             {% endif %}
+
+         {% endfor %}
+       </div>
+
+ </div>
+
+
+</div>
+</div>
+</body>
+</html>

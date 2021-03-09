@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+
+{% load short_form %}
+{% block content %}
+
+
+<div class="content container-fluid">
+
+{% for post in posts %}
+    <h2><a  style="color:#4988F4;" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+    <p>published: {{ post.published_date }}{% if user.is_authenticated %} <a id="deletetag" href="{% url 'post_delete' pk=post.pk %}"><i class="fa fa-trash" style="color:red;" aria-hidden="true"></i></a>{% endif %}</p>
+    <div>
+      <p>{{ post.text|linebreaksbr|short_form:250 }}</p>
+      </div>
+{% endfor %}
+</div>
+
+
+{% endblock %}

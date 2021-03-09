@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<style>
+.center_div h2{
+  margin-bottom:30px;
+  color:#189F5E;
+}
+.center_div{
+    margin: 0 auto;
+    width:60% /* value of your choice which suits your alignment */
+
+}
+
+</style>
+
+
+<div class="row">
+  <div class="center_div">
+    <h4><strong>{{ title }}</strong></h4>
+    {% if confirm_message %}
+          <p class="text-success">{{ confirm_message }}</p>
+          {% endif %}
+
+  {% if form %}
+
+    <strong><h2>Contact Us</h2></strong>
+          <form method="post">{% csrf_token %}
+
+              <div class="form-group">
+                <label>Name</label>
+                {{ form.name }}
+              </div>
+
+              <div class="form-group">
+                <label>Subject</label>
+                {{ form.subject }}
+              </div>
+
+              <div class="form-group">
+                <label>Email</label>
+              {{ form.email }}
+              </div>
+
+              <div class="form-group">
+                <label>Message</label>
+                {{ form.message }}
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+{% endblock %}
